@@ -20,8 +20,20 @@ try:
             df = pandas.DataFrame(
                 Dados, columns=["DATA", "PRECIP. (mm)", "EVAPORACAO (mm)"])
 
+# Carregar arquivo excel existente
+            wb = load_workbook(Nome_Arquivo + ".xlsx")
+            ws = wb["Evapo 2"]
+
+# Leitura de parâmetros do arquivo
+            row = ws.max_row
+            column = ws.max_column
+
+# Ler último valor acumulado
+            Calculado = ws.cell(row=row, column=3).value
+            Calculado = float(Calculado)  # type: ignore
+
 # Condicao acumulativa da precipitacao mensal e insercao do valor no dataframe
-            Acumulativo = df["PRECIP. (mm)"].cumsum()
+            Acumulativo = df["PRECIP. (mm)"].cumsum() + Calculado
             df.insert(2, "PREC. ACUM. (mm)", Acumulativo)
 
 # Formatacao da data
@@ -29,18 +41,10 @@ try:
             # Ano com Y maiúsculo, saída com 4 dígitos / Ano com y minúsculo, saída com 2 dígitos
             df["DATA"] = df["DATA"].dt.strftime("%d/%m/%y")
 
-# Carregar arquivo excel existente
-            wb = load_workbook(Nome_Arquivo + ".xlsx")
-            ws = wb["Evapo 2"]
-
 # Transformar dataframe em datarows (linhas de dados)
             dr = dataframe_to_rows(df, index=False, header=False,)
 
-# Leitura de parâmetros do arquivo
-            row_before = ws.max_row + 1
-            column = ws.max_column
-
-# Inserir dados na planilha     
+# Inserir dados na planilha
             for r in dr:
                 ws.append(r)
 
@@ -52,11 +56,10 @@ try:
 #            ws.add_image(img2, "D1")
 
 # Leitura de parâmetros do arquivo
+            row_before = row + 1
             row_after = ws.max_row + 1
 
 # Formatar dados da planilha
-            row = ws.max_row
-            column = ws.max_column - 1
             for i in range(row_before, row_after):
                 for j in range(1, column):
                     ws.cell(i, j).font = Font(name="Calibri",
@@ -81,7 +84,8 @@ try:
 #                                                 horizontal=Side(border_style=None,
 #                                                 color='FF000000'))
 
-                    ws.cell(i, j).alignment = Alignment(horizontal='center', vertical='center')
+                    ws.cell(i, j).alignment = Alignment(
+                        horizontal='center', vertical='center')
                     ws.cell(i, j).number_format = '0.0'
 
 # Apresentacao dos dataframes no terminal
