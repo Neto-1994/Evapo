@@ -1,0 +1,16 @@
+Versão: 2.0
+
+Comando para atualizar pip e repositório;
+*** python.exe -m pip install --upgrade pip
+
+Biblioteca para manipulação e análise de dados;
+*** pip install pandas
+
+Driver de conexão mysql;
+*** pip install mysql2
+
+Biblioteca python para ler e escrever arquivos excel;
+*** pip install openpyxl
+
+Biblioteca para adicionar recursos de processamento de imagem ao interpretador python;
+*** pip install Pillow
