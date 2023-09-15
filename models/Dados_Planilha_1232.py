@@ -10,7 +10,7 @@ from openpyxl.drawing.image import Image
 try:
     class Estacao1232():
         def _init_(self, data1, data2, Nome_Arquivo, Nome_Salvar):
-            data2 = data2 + " 21:00:00"
+            data2 = data2 + " 23:00:00"
             consulta_sql = "SELECT DATE(HoraLocal), SUM(Pluvio1h), SUM(Evaporacao1h) FROM medicoes WHERE Codigo_Sec = 1232 AND HoraLocal BETWEEN %s AND %s GROUP BY DATE(HoraLocal);"
             cursor = conexao.con.cursor()
             cursor.execute(consulta_sql, (data1, data2))
