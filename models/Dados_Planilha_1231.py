@@ -1,6 +1,6 @@
 from sys import displayhook
 import pandas
-import conexao
+import Conexao
 from openpyxl import load_workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import Border, Side, Alignment, Font
@@ -10,9 +10,9 @@ from openpyxl.drawing.image import Image
 try:
     class Estacao1231():
         def _init_(self, data1, data2, Nome_Arquivo, Nome_Salvar):
-            data2 = data2 + " 23:00:00"
+            data2 = data2 + " 23:59:59"
             consulta_sql = "SELECT DATE(HoraLocal), SUM(Pluvio1h), SUM(Evaporacao1h) FROM medicoes WHERE Codigo_Sec = 1231 AND HoraLocal BETWEEN %s AND %s GROUP BY DATE(HoraLocal);"
-            cursor = conexao.con.cursor()
+            cursor = Conexao.con.cursor()
             cursor.execute(consulta_sql, (data1, data2))
             Dados = cursor.fetchall()
 

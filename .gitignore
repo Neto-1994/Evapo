@@ -1,2 +1,2 @@
-# Ignorar arquivos
-conexao.py
+#Arquivos ignorados
+.env
