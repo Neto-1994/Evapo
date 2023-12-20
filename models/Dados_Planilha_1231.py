@@ -42,7 +42,7 @@ try:
             df["DATA"] = df["DATA"].dt.strftime("%d/%m/%y")
 
 # Transformar dataframe em datarows (linhas de dados)
-            dr = dataframe_to_rows(df, index=False, header=False,)
+            dr = dataframe_to_rows(df, index=False, header=False)
 
 # Inserir dados na planilha
             for r in dr:
